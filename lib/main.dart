@@ -1,5 +1,6 @@
 import 'dart:ffi';
-
+//import 'dart:convert';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'base-client.dart';
 // import 'dart:convert' as convert;
@@ -71,11 +72,22 @@ class _MyHomePageState extends State<MyHomePage> {
               var entities = jsonresponse['value'];
 
               if (entities != null && entities.isNotEmpty) {
-                final firstEntity = entities[0];
-                print(firstEntity);
+                //             final firstEntity = entities[1];
+                //             print(firstEntity);
+
+                //            print(entities[0].toString());
+                ;
+                List<dynamic> team = List.from(entities);
+                team.forEach((member) {
+                  member.forEach((name, value) {
+                    if (name == 'Lastname') {
+                      print(value.toString());
+                    }
+                    ;
+                  });
+                });
               }
               print('hi');
-              print('there');
             },
           ),
         ],
@@ -86,9 +98,11 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (BuildContext context, int index) {
             String story = _stories[index];
             return ListTile(
-              title: Text(story),
-              tileColor: Colors.grey[100],
-            );
+                title: Text(story),
+                tileColor: Colors.grey[100],
+                onTap: () async {
+                  print(story);
+                });
           },
         ),
       ),
