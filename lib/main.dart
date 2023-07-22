@@ -69,7 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 team.forEach((member) {
                   String firstname = '';
                   String lastname = '';
-                  String fullname = '';
+                  String person = '';
+                  String age = '';
+                  String role = '';
 
                   member.forEach((name, value) {
                     if (name == 'Lastname') {
@@ -78,10 +80,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (name == 'Firstname') {
                       firstname = value;
                     }
+                    if (name == 'Age') {
+                      age = value;
+                    }
+                    if (name == 'Role') {
+                      role = value;
+                    }
                   });
 
-                  fullname = firstname + " " + lastname;
-                  lastNameList.add(fullname);
+                  person = firstname + " " + lastname + " " + age + " " + role;
+                  lastNameList.add(person);
                 });
               }
 
