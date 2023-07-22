@@ -1,9 +1,6 @@
-import 'dart:ffi';
 //import 'dart:convert';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/material.dart';
 import 'base-client.dart';
-// import 'dart:convert' as convert;
 
 void main() => runApp(MyApp());
 
@@ -22,7 +19,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(), //
+      home: MyHomePage(),
     );
   }
 }
@@ -59,35 +56,38 @@ class _MyHomePageState extends State<MyHomePage> {
               // Handle button press
               var jsonresponse =
                   await BaseClient().get("/UXTeam").catchError((err) {});
-
               if (jsonresponse == null) {
                 debugPrint('Unsuccessful');
                 return;
               }
 
-              //               final Map parsed = response.decode();
-              // Process the response data
-              // Example: Print the first entity in the response
-
               var entities = jsonresponse['value'];
 
+              List<String> lastNameList = [];
               if (entities != null && entities.isNotEmpty) {
-                //             final firstEntity = entities[1];
-                //             print(firstEntity);
-
-                //            print(entities[0].toString());
-                ;
                 List<dynamic> team = List.from(entities);
                 team.forEach((member) {
+                  String firstname = '';
+                  String lastname = '';
+                  String fullname = '';
+
                   member.forEach((name, value) {
                     if (name == 'Lastname') {
-                      print(value.toString());
+                      lastname = value;
                     }
-                    ;
+                    if (name == 'Firstname') {
+                      firstname = value;
+                    }
                   });
+
+                  fullname = firstname + " " + lastname;
+                  lastNameList.add(fullname);
                 });
               }
-              print('hi');
+
+              setState(() {
+                _stories = lastNameList;
+              });
             },
           ),
         ],
@@ -98,11 +98,12 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (BuildContext context, int index) {
             String story = _stories[index];
             return ListTile(
-                title: Text(story),
-                tileColor: Colors.grey[100],
-                onTap: () async {
-                  print(story);
-                });
+              title: Text(story),
+              tileColor: Colors.grey[100],
+              onTap: () async {
+                print(story);
+              },
+            );
           },
         ),
       ),
