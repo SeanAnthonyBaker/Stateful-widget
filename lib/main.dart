@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
               List<String> lastNameList = [];
               if (entities != null && entities.isNotEmpty) {
                 List<dynamic> team = List.from(entities);
+
                 team.forEach((member) {
                   String firstname = '';
                   String lastname = '';
